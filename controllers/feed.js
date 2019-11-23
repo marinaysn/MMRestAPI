@@ -10,6 +10,10 @@ exports.createPost = ( req, res, next) => {
     const content = req.body.content;
     const url = req.body.url;
     
+    // console.log(title);
+    // console.log(content);
+    console.log(req.body);
+
     res.status(201).json({
         message: 'Post Created!',
         post: {id: new Date().toISOString(), title: title, content: content, url: url}
