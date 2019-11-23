@@ -8,9 +8,11 @@ exports.createPost = ( req, res, next) => {
     //Create post in db
     const title = req.body.title;
     const content = req.body.content;
+    const url = req.body.url;
+    
     res.status(201).json({
         message: 'Post Created!',
-        post: {id: new Date().toISOString(), title: title, content: content}
+        post: {id: new Date().toISOString(), title: title, content: content, url: url}
     })
 };
 
