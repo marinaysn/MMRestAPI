@@ -45,9 +45,7 @@ class Feed extends Component {
       this.setState({ postsLoading: true, posts: [] });
     }
     let page = this.state.postPage;
-    console.log(this.state);
-    console.log('=================');
-    console.log(direction);
+
     if (direction === 'next') {
       
       page++;
@@ -57,7 +55,11 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('http://localhost:8080/feed/posts?page=' + page)
+    fetch('http://localhost:8080/feed/posts?page=' + page, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    })
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
