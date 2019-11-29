@@ -9,6 +9,9 @@ import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 import './Feed.css';
 
+//Global Variable to control Pegination
+const ITEMS_PER_PAGE = 5;
+
 class Feed extends Component {
   state = {
     isEditing: false,
@@ -42,7 +45,11 @@ class Feed extends Component {
       this.setState({ postsLoading: true, posts: [] });
     }
     let page = this.state.postPage;
+    console.log(this.state);
+    console.log('=================');
+    console.log(direction);
     if (direction === 'next') {
+      
       page++;
       this.setState({ postPage: page });
     }
@@ -50,7 +57,7 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch('http://localhost:8080/feed/posts')
+    fetch('http://localhost:8080/feed/posts?page=' + page)
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
@@ -250,7 +257,7 @@ class Feed extends Component {
             <Paginator
               onPrevious={this.loadPosts.bind(this, 'previous')}
               onNext={this.loadPosts.bind(this, 'next')}
-              lastPage={Math.ceil(this.state.totalPosts / 2)}
+              lastPage={Math.ceil(this.state.totalPosts / ITEMS_PER_PAGE)}
               currentPage={this.state.postPage}
             >
               {this.state.posts.map(post => (
